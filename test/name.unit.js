@@ -103,4 +103,26 @@ describe("name.js", function () {
             faker.name.jobType.restore();
         });
     });
+
+    describe("usaSSN()", function () {
+      it("returns a valid ssn", function() {
+        sinon.stub(faker.random, 'number').returns(123456789);
+        assert.ok(faker.name.ssn() === 123456789);
+        faker.random.number.restore();
+      });
+    });
+
+    describe("validSSN()", function() {
+      it('returns true for valid ssn', function() {
+        assert.ok(faker.name.validSSN(123456789))
+      });
+
+      it('retuns false for invalid ssn', function() {
+        assert.equal(faker.name.validSSN(111004567), false)
+        assert.equal(faker.name.validSSN(000114567), false)
+        assert.equal(faker.name.validSSN(354110000), false)
+        assert.equal(faker.name.validSSN(666114567), false)
+        assert.equal(faker.name.validSSN(901010101), false)
+      });
+    });
 });
